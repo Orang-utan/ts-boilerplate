@@ -25,13 +25,14 @@ router.post("/", (req, res) => {
 
 // get all canvas
 router.get("/", (_, res) => {
-  Canvas.find({}, (e, result) => {
-    if (e) {
-      return res.status(500).json({ error: e });
-    } else {
+  Canvas.find({})
+    .select("-canvasSaved")
+    .then((result) => {
       return res.status(200).json({ message: "success", result: result });
-    }
-  });
+    })
+    .catch((e) => {
+      return res.status(500).json({ error: e });
+    });
 });
 
 export default router;

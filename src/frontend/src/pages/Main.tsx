@@ -20,27 +20,61 @@ type Canvas = {
 
 const Main = () => {
   const [canvas, setCanvas] = React.useState([]);
+  const [fileName, setFileName] = React.useState("");
+  const [character, setCharacter] = React.useState(getCharacter());
 
-  const [character, setCharacter] = React.useState("Bob");
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    if (fileName == "") {
+      return;
+    }
 
-  function handleSubmit() {
-    console.log("Submit");
-    // axios({
-    //   url: `${ENDPOINT}/canvas`,
-    //   method: "POST",
-    //   timeout: 0,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   data: JSON.stringify({ name: "Hello", creator: "Dan" }),
-    // });
+    axios({
+      url: `${ENDPOINT}/canvas`,
+      method: "POST",
+      timeout: 0,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({ name: fileName, creator: character }),
+    }).then(() => {
+      fetchCanvas();
+    });
+
+    e.preventDefault();
   }
 
   function getCharacter() {
-    return "Bob";
+    const nameArr = [
+      "Annelle",
+      "Sherril",
+      "Ernie",
+      "Quinn",
+      "Zenaida",
+      "Marget",
+      "Olive",
+      "Jamal",
+      "Indira",
+      "Bradly",
+      "Corene",
+      "Clarissa",
+      "Michelle",
+      "Azalee",
+    ];
+
+    return nameArr[Math.floor(Math.random() * (nameArr.length - 1))];
   }
 
-  React.useEffect(() => {
+  function handleNameChange() {
+    setCharacter(getCharacter());
+  }
+
+  function handleFileName(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setFileName(e.target.value);
+  }
+
+  function fetchCanvas() {
     axios({
       url: `${ENDPOINT}/canvas`,
       method: "GET",
@@ -52,6 +86,10 @@ const Main = () => {
 
       setCanvas(result);
     });
+  }
+
+  React.useEffect(() => {
+    fetchCanvas();
   }, []);
 
   return (
@@ -67,17 +105,25 @@ const Main = () => {
         style={{ display: "block", margin: "20px 0px" }}
         variant="contained"
         color="primary"
+        onClick={handleNameChange}
       >
         Generate New Character
       </Button>
       <Divider style={{ margin: "20px 0px" }} />
       <Typography variant="h4">Create New Canvas</Typography>
-      <form style={{ marginTop: "20px" }} onSubmit={handleSubmit}>
+      <form
+        style={{ marginTop: "20px" }}
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}
+      >
         <TextField
           style={{ display: "block", margin: "20px 0px" }}
           variant="outlined"
           label="Filename"
           size="small"
+          value={fileName}
+          onChange={(
+            e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+          ) => handleFileName(e)}
         />
         <Button
           style={{ display: "block", margin: "20px 0px" }}

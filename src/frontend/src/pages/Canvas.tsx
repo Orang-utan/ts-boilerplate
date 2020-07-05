@@ -1,13 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  IconButton,
-  Button,
-  TextField,
-  Divider,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import socketIOClient from "socket.io-client";
 import { ENDPOINT } from "../config";
 
@@ -99,6 +92,10 @@ const Canvas: React.FC<Props> = ({ history, match }) => {
         context.lineWidth = 3;
         context.stroke();
         context.closePath();
+
+        if (socket) {
+          socket.emit("freeDraw", { start, end, canvasId });
+        }
       }
     }
 
@@ -131,6 +128,31 @@ const Canvas: React.FC<Props> = ({ history, match }) => {
 
         setContext(renderCtx);
       }
+    }
+
+    if (socket && context) {
+      socket.on(
+        "freeDrawAll",
+        ({
+          start,
+          end,
+          canvasId: id,
+        }: {
+          start: Coordinates;
+          end: Coordinates;
+          canvasId: string;
+        }) => {
+          if (canvasId == id) {
+            context.beginPath();
+            context.moveTo(start.x, start.y);
+            context.lineTo(end.x, end.y);
+            context.strokeStyle = `#${randomColor()}`;
+            context.lineWidth = 3;
+            context.stroke();
+            context.closePath();
+          }
+        }
+      );
     }
 
     return function cleanup() {

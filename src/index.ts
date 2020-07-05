@@ -61,6 +61,10 @@ io.on("connect", (socket: socket.Socket) => {
     });
   });
 
+  socket.on("freeDraw", ({ start, end, canvasId }) => {
+    io.sockets.emit("freeDrawAll", { start, end, canvasId });
+  });
+
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
