@@ -1,0 +1,25 @@
+{
+  "name": "ts-canvas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "server": "ts-node-dev --respawn src/index.ts",
+    "client": "cd src/frontend && yarn start",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node": "^14.0.14",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "ts-node-dev": "^1.0.0-pre.49",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "shortid": "^2.2.15",
+    "socket.io": "^2.3.0"
+  }
+}
