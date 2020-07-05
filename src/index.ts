@@ -1,10 +1,20 @@
 import express from "express";
 import path from "path";
 import socket from "socket.io";
+import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import { Canvas } from "./models/canvas.model";
+import canvasRouter from "./routes/canvas.route";
+import cors from "cors";
 import "./config";
 
 const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use("/canvas", canvasRouter);
+
 const port = process.env.PORT || 3000;
 
 const server = app.listen(port, () => {
@@ -22,7 +32,7 @@ mongoose.connect(uri!, {
 
 const connection = mongoose.connection;
 connection.once("open", () => {
-  console.log("MongoDB database connection established succesfully 👷‍♂️");
+  console.log("MongoDB database connection established succesfully!");
 });
 
 if (process.env.NODE_ENV === "production") {
@@ -37,8 +47,18 @@ const io = socket(server);
 io.on("connect", (socket: socket.Socket) => {
   console.log("New client connected");
 
-  socket.on("save", (data) => {
-    console.log(data);
+  socket.on("loadHistory", (canvasId) => {
+    Canvas.findById(canvasId).then(async (canvas: any) => {
+      socket.emit("historySent", canvas.canvasSaved);
+    });
+  });
+
+  socket.on("save", ({ image, canvasId }) => {
+    Canvas.findById(canvasId).then(async (canvas: any) => {
+      canvas.canvasSaved = image;
+
+      await canvas.save();
+    });
   });
 
   socket.on("disconnect", () => {

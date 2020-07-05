@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import socketIOClient from "socket.io-client";
+import { ENDPOINT } from "../config";
 
 type Coordinates = {
   x: number;
@@ -20,7 +21,6 @@ interface Props {
   match: any;
 }
 
-const ENDPOINT = "http://localhost:3000";
 const canvas_width = 500;
 const canvas_height = 500;
 const Canvas: React.FC<Props> = ({ history, match }) => {
@@ -141,6 +141,24 @@ const Canvas: React.FC<Props> = ({ history, match }) => {
       }
     };
   }, [context]);
+
+  React.useEffect(() => {
+    if (socket) {
+      socket.emit("loadHistory", canvasId);
+
+      if (context) {
+        socket.on("historySent", (canvasSaved: any) => {
+          console.log(canvasSaved);
+          const image = new Image();
+          image.onload = () => {
+            context.clearRect(0, 0, canvas_width, canvas_width);
+            context.drawImage(image, 0, 0); // draw the new image to the screen
+          };
+          image.src = canvasSaved;
+        });
+      }
+    }
+  }, [socket]);
 
   const handleBack = () => {
     history.push("/");

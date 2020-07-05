@@ -9,23 +9,50 @@ import {
   Typography,
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import axios from "axios";
+import { ENDPOINT } from "../config";
+
+type Canvas = {
+  _id: string;
+  name: string;
+  creator: string;
+};
 
 const Main = () => {
-  const [canvas, setCanvas] = React.useState([
-    { name: "Sunflower by Daniel", id: "1" },
-    { name: "Hello by Tom", id: "2" },
-    { name: "Hello world by Yo", id: "3" },
-  ]);
+  const [canvas, setCanvas] = React.useState([]);
 
   const [character, setCharacter] = React.useState("Bob");
 
   function handleSubmit() {
     console.log("Submit");
+    // axios({
+    //   url: `${ENDPOINT}/canvas`,
+    //   method: "POST",
+    //   timeout: 0,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   data: JSON.stringify({ name: "Hello", creator: "Dan" }),
+    // });
   }
 
   function getCharacter() {
     return "Bob";
   }
+
+  React.useEffect(() => {
+    axios({
+      url: `${ENDPOINT}/canvas`,
+      method: "GET",
+      timeout: 0,
+    }).then((response) => {
+      const {
+        data: { result },
+      } = response;
+
+      setCanvas(result);
+    });
+  }, []);
 
   return (
     <div>
@@ -63,10 +90,10 @@ const Main = () => {
         <Divider style={{ margin: "20px 0px" }} />
         <Typography variant="h4">Enter Existing Canvas</Typography>
         <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-          {canvas.map((val) => {
+          {canvas.map((val: Canvas) => {
             return (
               <Paper
-                key={val.id}
+                key={val._id}
                 style={{
                   display: "block",
                   margin: "20px 0px",
@@ -81,11 +108,11 @@ const Main = () => {
                   <FavoriteIcon />
                 </IconButton>
                 <Link
-                  to={`/canvas/${val.id}`}
+                  to={`/canvas/${val._id}`}
                   style={{ textDecoration: "none" }}
                 >
                   <Typography variant="subtitle1" style={{ display: "inline" }}>
-                    {val.name}
+                    {val.name} by {val.creator}
                   </Typography>
                 </Link>
               </Paper>
