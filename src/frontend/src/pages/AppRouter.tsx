@@ -10,7 +10,7 @@ const AppRouter = () => {
       <Router>
         <Switch>
           <Route path="/" exact component={Main} />
-          <Route path="/canvas" exact component={Canvas} />
+          <Route path="/canvas/:id" exact component={Canvas} />
         </Switch>
       </Router>
     </Container>

@@ -1,16 +1,47 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  IconButton,
+  Button,
+  TextField,
+  Divider,
+  Paper,
+  Typography,
+} from "@material-ui/core";
+import socketIOClient from "socket.io-client";
 
 type Coordinates = {
   x: number;
   y: number;
 };
 
-const Canvas = () => {
+interface Props {
+  history: any;
+  match: any;
+}
+
+const ENDPOINT = "http://localhost:3000";
+const canvas_width = 500;
+const canvas_height = 500;
+const Canvas: React.FC<Props> = ({ history, match }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const [context, setContext] = React.useState<CanvasRenderingContext2D | null>(
     null
   );
+  const [socket, setSocket] = React.useState<SocketIOClient.Socket | null>(
+    null
+  );
+  const canvasId = match.params.id;
+
+  React.useEffect(() => {
+    setSocket(socketIOClient(ENDPOINT));
+
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, []);
 
   React.useEffect(() => {
     let mouseDown: boolean = false;
@@ -35,6 +66,17 @@ const Canvas = () => {
 
     function handleMouseUp(evt: MouseEvent) {
       mouseDown = false;
+
+      if (canvasRef.current) {
+        // transmit this to socket
+        const canvasContent = canvasRef.current.toDataURL();
+        if (socket) {
+          socket.emit("save", {
+            image: canvasContent,
+            canvasId: canvasId,
+          });
+        }
+      }
     }
 
     function handleMouseMove(evt: MouseEvent) {
@@ -100,18 +142,24 @@ const Canvas = () => {
     };
   }, [context]);
 
+  const handleBack = () => {
+    history.push("/");
+  };
+
   return (
     <div
       style={{
         textAlign: "center",
       }}
     >
-      <Link to="/">Go back to Menu</Link>
+      <Typography variant="body1" onClick={handleBack}>
+        Go Back to Menu
+      </Typography>
       <canvas
         id="canvas"
         ref={canvasRef}
-        width={500}
-        height={500}
+        width={canvas_width}
+        height={canvas_height}
         style={{
           border: "2px solid #000",
           marginTop: 10,

@@ -6,14 +6,15 @@ import {
   TextField,
   Divider,
   Paper,
+  Typography,
 } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const Main = () => {
   const [canvas, setCanvas] = React.useState([
-    "Sunflower by Daniel",
-    "Hello by Tom",
+    { name: "Sunflower by Daniel", id: "1" },
+    { name: "Hello by Tom", id: "2" },
+    { name: "Hello world by Yo", id: "3" },
   ]);
 
   const [character, setCharacter] = React.useState("Bob");
@@ -65,6 +66,7 @@ const Main = () => {
           {canvas.map((val) => {
             return (
               <Paper
+                key={val.id}
                 style={{
                   display: "block",
                   margin: "20px 0px",
@@ -78,9 +80,12 @@ const Main = () => {
                 >
                   <FavoriteIcon />
                 </IconButton>
-                <Link to="/canvas" style={{ textDecoration: "none" }}>
+                <Link
+                  to={`/canvas/${val.id}`}
+                  style={{ textDecoration: "none" }}
+                >
                   <Typography variant="subtitle1" style={{ display: "inline" }}>
-                    {val}
+                    {val.name}
                   </Typography>
                 </Link>
               </Paper>
