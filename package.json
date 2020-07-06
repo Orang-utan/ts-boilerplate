@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "server": "ts-node-dev --respawn src/index.ts",
+    "server": "ts-node-dev --respawn index.ts",
     "client": "cd src/frontend && yarn start",
-    "start": "node src/index.js",
+    "start": "node index.js",
     "build": "tsc",
     "heroku-postbuild": "cd src/frontend && npm install && yarn build"
   },
