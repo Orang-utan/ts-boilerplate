@@ -5,6 +5,10 @@ import { Container } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const AppRouter = () => {
+  React.useEffect(() => {
+    console.log("yoooooooooo!!!!");
+  });
+
   return (
     <Container maxWidth="sm">
       <Router>

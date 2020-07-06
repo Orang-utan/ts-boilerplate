@@ -9,7 +9,7 @@
     "client": "cd src/frontend && yarn start",
     "start": "ts-node ./src/index.ts",
     "build": "tsc",
-    "heroku-postbuild": "cd src/frontend && npm install && yarn build"
+    "heroku-postbuild": "cd src/frontend && yarn install && yarn build"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
