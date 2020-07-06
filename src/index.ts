@@ -3,10 +3,10 @@ import path from "path";
 import socket from "socket.io";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import { Canvas } from "./src/models/canvas.model";
-import canvasRouter from "./src/routes/canvas.route";
+import { Canvas } from "./models/canvas.model";
+import canvasRouter from "./routes/canvas.route";
 import cors from "cors";
-import "./src/utils//config";
+import "./utils/config";
 
 const app = express();
 app.use(cors());
