@@ -7,7 +7,7 @@
     "dev": "concurrently \"yarn server\" \"yarn client\"",
     "server": "ts-node-dev --respawn src/index.ts",
     "client": "cd src/frontend && yarn start",
-    "start": "ts-node ./src/index.ts",
+    "start": "node ./src/index.js",
     "build": "tsc",
     "heroku-postbuild": "cd src/frontend && npm install && yarn build"
   },
