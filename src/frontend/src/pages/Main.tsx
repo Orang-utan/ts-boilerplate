@@ -23,21 +23,21 @@ const Main = () => {
   const [fileName, setFileName] = React.useState("");
   const [character, setCharacter] = React.useState(getCharacter());
 
-  const eventSource = new EventSource(`${ENDPOINT}/canvas/events`);
+  React.useEffect(() => {
+    const eventSource = new EventSource(`${ENDPOINT}/canvas/events`);
 
-  eventSource.onopen = (e) => {
-    console.log(e);
-  };
-  eventSource.onmessage = (e) => {
-    console.log("onmessage");
-    console.log(e);
-  };
-  eventSource.addEventListener("ping", (e) => {
-    console.log(e);
-  });
+    eventSource.addEventListener("delete", (e) => {
+      alert("All of the canvas are deleted!");
+      fetchCanvas();
+    });
+
+    eventSource.addEventListener("add", (e) => {
+      fetchCanvas();
+    });
+  }, []);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    if (fileName === "") {
+    if (fileName == "") {
       return;
     }
 

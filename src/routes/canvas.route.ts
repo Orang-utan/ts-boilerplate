@@ -1,25 +1,42 @@
 import express from "express";
+import events from "events";
 import { Canvas } from "../models/canvas.model";
 
 const router = express.Router();
+const eventEmitter = new events.EventEmitter();
 
 // sse delete notification
-router.get("/events", (_, res) => {
-  console.log("request received");
+router.get("/events", (req, res) => {
   res.writeHead(200, {
     Connection: "keep-alive",
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",
   });
-  setInterval(async () => {
-    res.write("event: ping\n"); // added these
-    res.write(`data: ${JSON.stringify({ hasUnread: true })}`);
-    res.write("\n\n");
-  }, 5000);
+
+  function deleteListener() {
+    res.write("event: delete\n");
+    res.write("data: Delete event notification!\n\n");
+  }
+
+  function addListener() {
+    res.write("event: add\n");
+    res.write("data: Add event notification!\n\n");
+  }
+
+  // Listens for 'event' and sends an 'Event triggered!' message to client when its heard.
+  eventEmitter.addListener("delete", deleteListener);
+  eventEmitter.addListener("add", addListener);
+
+  req.on("close", () => {
+    eventEmitter.removeAllListeners();
+    res.end();
+    console.log("Stop sending events since client closed connection.");
+  });
 });
 
 // create new canvas
 router.post("/", (req, res) => {
+  eventEmitter.emit("add");
   const creator = req.body.creator;
   const name = req.body.name;
 
@@ -52,7 +69,9 @@ router.get("/", (_, res) => {
 
 // delete all canvas
 router.delete("/", (_, res) => {
-  Canvas.remove({})
+  eventEmitter.emit("delete");
+
+  Canvas.deleteMany({})
     .then(() => {
       return res.status(200).json({ message: "success" });
     })
