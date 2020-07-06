@@ -170,7 +170,6 @@ const Canvas: React.FC<Props> = ({ history, match }) => {
 
       if (context) {
         socket.on("historySent", (canvasSaved: any) => {
-          console.log(canvasSaved);
           const image = new Image();
           image.onload = () => {
             context.clearRect(0, 0, canvas_width, canvas_width);
