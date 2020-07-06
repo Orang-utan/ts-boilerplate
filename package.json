@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
     "server": "ts-node-dev --respawn src/index.ts",
     "client": "cd src/frontend && yarn start",
     "build": "tsc"
@@ -15,6 +16,7 @@
     "@types/mongoose": "^5.7.29",
     "@types/node": "^14.0.14",
     "@types/socket.io": "^2.1.8",
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.49",

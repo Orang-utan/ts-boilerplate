@@ -23,8 +23,21 @@ const Main = () => {
   const [fileName, setFileName] = React.useState("");
   const [character, setCharacter] = React.useState(getCharacter());
 
+  const eventSource = new EventSource(`${ENDPOINT}/canvas/events`);
+
+  eventSource.onopen = (e) => {
+    console.log(e);
+  };
+  eventSource.onmessage = (e) => {
+    console.log("onmessage");
+    console.log(e);
+  };
+  eventSource.addEventListener("ping", (e) => {
+    console.log(e);
+  });
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    if (fileName == "") {
+    if (fileName === "") {
       return;
     }
 
@@ -72,6 +85,16 @@ const Main = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     setFileName(e.target.value);
+  }
+
+  function handleDelete() {
+    axios({
+      url: `${ENDPOINT}/canvas`,
+      method: "DELETE",
+      timeout: 0,
+    }).then(() => {
+      fetchCanvas();
+    });
   }
 
   function fetchCanvas() {
@@ -134,7 +157,17 @@ const Main = () => {
           Create New Canvas
         </Button>
         <Divider style={{ margin: "20px 0px" }} />
-        <Typography variant="h4">Enter Existing Canvas</Typography>
+        <div style={{ display: "flex" }}>
+          <Typography variant="h4">Edit Existing Canvas</Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ marginLeft: "20px" }}
+            onClick={handleDelete}
+          >
+            Delete All
+          </Button>
+        </div>
         <ul style={{ listStyle: "none", paddingLeft: 0 }}>
           {canvas.map((val: Canvas) => {
             return (
