@@ -7,7 +7,7 @@
     "dev": "concurrently \"yarn server\" \"yarn client\"",
     "server": "ts-node-dev --respawn src/index.ts",
     "client": "cd src/frontend && yarn start",
-    "build": "tsc && cd src/frontend && yarn build"
+    "build": "cd src/frontend && yarn install && tsc && cd src/frontend && yarn build"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
