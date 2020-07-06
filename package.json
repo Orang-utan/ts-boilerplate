@@ -19,7 +19,6 @@
     "@types/node": "^14.0.14",
     "@types/socket.io": "^2.1.8",
     "concurrently": "^5.2.0",
-    "eslint": "^7.4.0",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.49",
