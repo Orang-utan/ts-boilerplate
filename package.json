@@ -7,7 +7,8 @@
     "dev": "concurrently \"yarn server\" \"yarn client\"",
     "server": "ts-node-dev --respawn src/index.ts",
     "client": "cd src/frontend && yarn start",
-    "build": "cd src/frontend && yarn install && tsc && cd src/frontend && yarn build"
+    "build": "tsc",
+    "heroku-postbuild": "cd src/frontend && npm install && yarn build"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
