@@ -36,7 +36,7 @@ connection.once("open", () => {
 });
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static("fronteend/build"));
   app.get("*", (request, response) => {
     response.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
   });
