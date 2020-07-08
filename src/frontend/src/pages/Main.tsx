@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import axios from "axios";
-const ENDPOINT = process.env.API_URL ? process.env.API_URL : "";
+const ENDPOINT = process.env.API_URL || "";
 
 type Canvas = {
   _id: string;

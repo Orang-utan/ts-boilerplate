@@ -14,7 +14,7 @@ interface Props {
 
 const canvas_width = 500;
 const canvas_height = 500;
-const ENDPOINT = process.env.API_URL ? process.env.API_URL : "";
+const ENDPOINT = process.env.API_URL || "";
 
 const Canvas: React.FC<Props> = ({ history, match }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
