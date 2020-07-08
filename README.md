@@ -1,6 +1,6 @@
 # TS-Boilerplate
 
-A monorepo boilerplate starter project for TypeScript, React, Express stack. If you want to checkout an example project based on TS-Boilerplate, check out [TS-Canvas](https://github.com/orang-utan/ts-canvas).
+A monorepo boilerplate starter project for TypeScript, React, Express, Mongoose, MongoDB stack. If you want to checkout an example project based on TS-Boilerplate, check out [TS-Canvas](https://github.com/orang-utan/ts-canvas).
 
 ## Setting Up
 
