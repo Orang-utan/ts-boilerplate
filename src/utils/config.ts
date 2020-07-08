@@ -10,9 +10,9 @@ switch (process.env.NODE_ENV) {
     break;
   case "production":
     console.log("Environment is 'production'");
-    configDotenv({
-      path: resolve(__dirname, "../../dev.env"),
-    });
+    // configDotenv({
+    //   path: resolve(__dirname, "../../dev.env"),
+    // });
     break;
   case "test":
     configDotenv({
