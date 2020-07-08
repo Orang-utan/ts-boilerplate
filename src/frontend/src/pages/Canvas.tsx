@@ -1,7 +1,6 @@
 import { Typography } from "@material-ui/core";
 import React from "react";
 import socketIOClient from "socket.io-client";
-import { ENDPOINT } from "../config";
 
 type Coordinates = {
   x: number;
@@ -15,6 +14,8 @@ interface Props {
 
 const canvas_width = 500;
 const canvas_height = 500;
+const ENDPOINT = process.env.API_URL ? process.env.API_URL : "";
+
 const Canvas: React.FC<Props> = ({ history, match }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const [context, setContext] = React.useState<CanvasRenderingContext2D | null>(
