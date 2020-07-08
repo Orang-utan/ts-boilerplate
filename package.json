@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "concurrently \"yarn server\" \"yarn client\"",
     "server": "ts-node-dev --respawn src/index.ts",
-    "client": "cd src/frontend && yarn start",
+    "client": "cd src/client && yarn start",
     "start": "ts-node ./src/index.ts",
     "build": "tsc",
-    "heroku-postbuild": "cd src/frontend && yarn install && yarn build"
+    "heroku-postbuild": "cd src/client && yarn install && yarn build"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
