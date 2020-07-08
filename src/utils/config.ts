@@ -5,7 +5,7 @@ switch (process.env.NODE_ENV) {
   case "development":
     console.log("Environment is 'development'");
     configDotenv({
-      path: resolve(__dirname, "../../dev.env"),
+      path: resolve(__dirname, "../../.env.development"),
     });
     break;
   case "production":

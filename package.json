@@ -1,9 +1,10 @@
 {
-  "name": "ts-canvas",
+  "name": "ts-boilerplate",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "setup": "yarn install && cd src/client && yarn install",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
     "server": "ts-node-dev --respawn src/index.ts",
     "client": "cd src/client && yarn start",

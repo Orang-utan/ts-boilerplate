@@ -1,10 +1,8 @@
 import express from "express";
 import path from "path";
-import socket from "socket.io";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import { Canvas } from "./models/canvas.model";
-import canvasRouter from "./routes/canvas.route";
+import userRouter from "./routes/user";
 import cors from "cors";
 import "./utils/config";
 
@@ -13,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/canvas", canvasRouter);
+app.use("/api/user", userRouter);
 
 const port = process.env.PORT || 5000;
 
@@ -23,6 +21,10 @@ const server = app.listen(port, () => {
 
 // setting up database
 const uri: string | undefined = process.env.ATLAS_URI;
+
+if (uri === undefined) {
+  throw ".env file error: ATLAS_URI not configured";
+}
 
 mongoose.connect(uri!, {
   useNewUrlParser: true,
@@ -39,35 +41,7 @@ if (process.env.NODE_ENV === "production") {
   const root = path.join(__dirname, "client", "build");
 
   app.use(express.static(root));
-  app.get("*", (req, res) => {
+  app.get("*", (_, res) => {
     res.sendFile("index.html", { root });
   });
 }
-
-const io = socket(server);
-
-io.on("connect", (socket: socket.Socket) => {
-  console.log("New client connected");
-
-  socket.on("loadHistory", (canvasId) => {
-    Canvas.findById(canvasId).then(async (canvas: any) => {
-      socket.emit("historySent", canvas.canvasSaved);
-    });
-  });
-
-  socket.on("save", ({ image, canvasId }) => {
-    Canvas.findById(canvasId).then(async (canvas: any) => {
-      canvas.canvasSaved = image;
-
-      await canvas.save();
-    });
-  });
-
-  socket.on("freeDraw", ({ start, end, canvasId }) => {
-    io.sockets.emit("freeDrawAll", { start, end, canvasId });
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
