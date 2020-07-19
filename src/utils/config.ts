@@ -1,14 +1,14 @@
-import { config as configDotenv } from "dotenv";
-import { resolve } from "path";
+import { config as configDotenv } from 'dotenv';
+import { resolve } from 'path';
 
 switch (process.env.NODE_ENV) {
-  case "development":
+  case 'development':
     console.log("Environment is 'development'");
     configDotenv({
-      path: resolve(__dirname, "../../.env.development"),
+      path: resolve(__dirname, '../../.env.development'),
     });
     break;
-  case "production":
+  case 'production':
     console.log("Environment is 'production'");
     break;
   default:

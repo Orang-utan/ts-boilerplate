@@ -1,12 +1,15 @@
-import React from "react";
-import Main from "./Main";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React from 'react';
+import Main from './Main';
+import Signup from './Signup';
+
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 const AppRouter = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={Main} />
+        <Route exact path="/" component={Main} />
+        <Route exact path="/signup" component={Signup} />
       </Switch>
     </Router>
   );
