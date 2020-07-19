@@ -1,14 +1,19 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import styled from 'styled-components';
 
-const ENDPOINT = process.env.REACT_APP_API_URL || "";
+const ContentContainer = styled.div`
+  text-align: center;
+  margin: 5%;
+`;
 
 const Main = () => {
   return (
-    <div>
-      <h1>Welcome to TS-boilerplate</h1>
-    </div>
+    <ContentContainer>
+      <h1>Welcome to TS Boilerplate</h1>
+      <a href="https://github.com/Orang-utan/ts-boilerplate">
+        Check out our Github
+      </a>
+    </ContentContainer>
   );
 };
 

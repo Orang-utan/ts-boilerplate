@@ -1,0 +1,21 @@
+/* Avenir Book */
+@font-face {
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 400;
+  src: url(./AvenirLTStd-Book.otf) format("otf");
+}
+/* Avenir Medium */
+@font-face {
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 500;
+  src: url(./AvenirLTStd-Medium.otf) format("otf");
+}
+/* Avenir Roman */
+@font-face {
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 400;
+  src: url(./AvenirLTStd-Roman.otf) format("otf");
+}

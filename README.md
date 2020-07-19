@@ -2,7 +2,7 @@
 
 Dead simple monorepo boilerplate web project designed to take you from Git Cloning to Heroku Deployment in less 5 minutes. 🚀🤩
 
-It is built using the  TypeScript, React, Express, Mongoose, MongoDB stack. If you want to checkout an example project based on TS-Boilerplate, check out [TS-Canvas](https://github.com/orang-utan/ts-canvas).
+It is built using the TypeScript, React, Express, Mongoose, MongoDB stack. If you want to checkout an example project based on TS-Boilerplate, check out [TS-Canvas](https://github.com/orang-utan/ts-canvas).
 
 ## Setting Up
 
@@ -14,12 +14,20 @@ $ cd ts-boilerplate
 $ yarn setup
 ```
 
-#### Configuring Enviromental Variable
+##### Configuring Enviromental Variable
 
-- Create file called ".env.development" in root directory
-- In ".env.development", create new enviromental var: "ATLAS_URI=xxxxxxxxxxx"
-- Create file called ".env" in "./src/client"
-- "In .env", create new enviormental var: "REACT_APP_API_URL=http://localhost:5000"
+Create file called ".env.development" in root directory, it should look like the following:
+
+```
+ATLAS_URI=mongodb-connection-string-placeholder
+JWT_SECRET=my-secret-jwt-key-placeholder
+```
+
+Then, create another file called ".env" in "src/client", it should look like the following:
+
+```
+REACT_APP_API_URL="http://localhost:5000"
+```
 
 #### Running Project
 
