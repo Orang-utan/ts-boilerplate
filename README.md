@@ -4,6 +4,14 @@ Dead simple monorepo boilerplate web project designed to take you from Git Cloni
 
 It is built using the TypeScript, React, Express, Mongoose, MongoDB stack. If you want to checkout an example project based on TS-Boilerplate, check out [TS-Canvas](https://github.com/orang-utan/ts-canvas).
 
+## Features
+Essentially, here're some of its features:
+- User authentication / authorization system
+- Clean mono-repo structure with Express Server and React Client
+- Code linting setup according to Airbnb standards
+- Able to connect to MongoDB and WebSockets
+- Easy deployability on Heroku (literally 3 steps, it's really easy)
+
 ## Setting Up
 
 #### Installing Requirements
