@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Formik, Field, Form, FieldAttributes } from 'formik';
-import { signup } from '../api/UserApi';
+import { login } from '../api/UserApi';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 
@@ -15,16 +15,18 @@ const Button = styled.button`
   width: 100%;
 `;
 
-interface SignupParams {
-  firstName: string;
-  lastName: string;
+interface LoginParams {
   email: string;
   password: string;
 }
 
+interface LoginResponse {
+  accessToken: string;
+  refreshToken: string;
+  success: boolean;
+}
+
 const initialValues = {
-  firstName: '',
-  lastName: '',
   email: '',
   password: '',
 };
@@ -50,43 +52,32 @@ const FieldWrapper = ({
   );
 };
 
-const Signup = () => {
-  const [signupMutate] = useMutation(signup);
+const Login = () => {
+  const [loginMutate] = useMutation(login);
   let history = useHistory();
 
-  const handleSubmit = async (values: SignupParams) => {
+  const handleSubmit = async (values: LoginParams) => {
     try {
-      await signupMutate(values);
+      const { accessToken, refreshToken } = (await loginMutate(
+        values
+      )) as LoginResponse;
+
       alert('Success');
-      history.push('/login');
+      localStorage.setItem('authAccessToken', accessToken);
+      localStorage.setItem('authRefreshToken', refreshToken);
+
+      history.push('/dashboard');
     } catch (error) {
       alert('Error');
-      console.log(error.response.data);
     }
   };
 
   return (
     <FormContainer>
-      <h1 className="title is-1">Sign Up</h1>
+      <h1 className="title is-1">Welcome Back</h1>
 
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form>
-          <FieldWrapper icon="fa-signature">
-            <Field
-              name="firstName"
-              className="input"
-              type="text"
-              placeholder="First Name"
-            />
-          </FieldWrapper>
-          <FieldWrapper icon="fa-signature">
-            <Field
-              name="lastName"
-              className="input"
-              type="text"
-              placeholder="Last Name"
-            />
-          </FieldWrapper>
           <FieldWrapper icon="fa-envelope">
             <Field
               name="email"
@@ -104,7 +95,7 @@ const Signup = () => {
             />
           </FieldWrapper>
           <Button className="button is-primary" type="submit">
-            Create Account
+            Sign in
           </Button>
         </Form>
       </Formik>
@@ -112,4 +103,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
