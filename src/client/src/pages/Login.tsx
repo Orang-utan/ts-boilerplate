@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Formik, Field, Form, FieldAttributes } from 'formik';
 import { login } from '../api/UserApi';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../components/AuthContext';
 
 const FormContainer = styled.div`
   text-align: center;
@@ -54,6 +55,8 @@ const FieldWrapper = ({
 
 const Login = () => {
   const [loginMutate] = useMutation(login);
+  const { authState, authActions } = useContext(AuthContext);
+
   let history = useHistory();
 
   const handleSubmit = async (values: LoginParams) => {
@@ -62,9 +65,9 @@ const Login = () => {
         values
       )) as LoginResponse;
 
-      alert('Success');
-      localStorage.setItem('authAccessToken', accessToken);
-      localStorage.setItem('authRefreshToken', refreshToken);
+      authActions.setAccessToken(accessToken);
+      authActions.setRefreshToken(refreshToken);
+      authActions.setLoggedIn(true);
 
       history.push('/dashboard');
     } catch (error) {

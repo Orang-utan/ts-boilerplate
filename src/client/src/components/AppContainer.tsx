@@ -1,14 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from '../components/AuthContext';
 import styled from 'styled-components';
-
-const NavbarContainer = styled.div`
-  width: 100vw;
-  height: 50px;
-  padding: 0px 50px;
-  display: flex;
-  align-items: center;
-  background-color: #2c3e50;
-`;
+import { useHistory } from 'react-router-dom';
+import Navbar from './Navbar';
 
 const FooterContainer = styled.div`
   position: fixed;
@@ -25,13 +19,20 @@ const FooterContainer = styled.div`
 `;
 
 const AppContainer = ({ children }: { children: any }) => {
+  const { authState, authActions } = useContext(AuthContext);
+  let history = useHistory();
+
+  const logout = () => {
+    authActions.setLoggedIn(false);
+    authActions.setAccessToken('');
+    authActions.setRefreshToken('');
+
+    history.push('/');
+  };
+
   return (
     <div>
-      <NavbarContainer>
-        <a href="/" className="title is-6 has-text-white">
-          🚀 TS-Boilerplate
-        </a>
-      </NavbarContainer>
+      <Navbar />
       {children}
       <FooterContainer>
         <h1 className="has-text-grey-light">Made with ❤️ by DT</h1>

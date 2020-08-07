@@ -6,14 +6,15 @@ import Dashboard from './Dashboard';
 import AppContainer from '../components/AppContainer';
 import PrivateRoute from '../components/PrivateRoute';
 import PublicRoute from '../components/PublicRoute';
+import { AuthContextProvider } from '../components/AuthContext';
 
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 const AppRouter = () => {
   return (
-    <div>
-      <AppContainer>
-        <Router>
+    <AuthContextProvider>
+      <Router>
+        <AppContainer>
           <Switch>
             <PublicRoute exact path="/" component={Main} />
             <PublicRoute exact path="/signup" component={Signup} />
@@ -21,9 +22,9 @@ const AppRouter = () => {
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PublicRoute exact={false} path="/" component={Main} />
           </Switch>
-        </Router>
-      </AppContainer>
-    </div>
+        </AppContainer>
+      </Router>
+    </AuthContextProvider>
   );
 };
 
