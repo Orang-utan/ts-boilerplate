@@ -1,5 +1,5 @@
 import React, { useState, createContext } from 'react';
-import { isLoggedIn, getAccessToken, getRefreshToken } from '../utils/index';
+import { isLoggedIn, getAccessToken, getRefreshToken } from '../utils/authUtil';
 
 const initialState = {
   authState: {
