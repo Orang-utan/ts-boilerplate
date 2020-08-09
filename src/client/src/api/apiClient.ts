@@ -29,6 +29,7 @@ function isTokenExpiredError(error: AxiosResponse) {
 }
 
 async function refreshTokenAndReattemptRequest(error: AxiosError) {
+  console.log('Refreshing token');
   try {
     const { response: errorResponse } = error;
     const refreshToken = getRefreshToken();
@@ -66,6 +67,8 @@ async function refreshTokenAndReattemptRequest(error: AxiosError) {
     }
     return retryOriginalRequest;
   } catch (err) {
+    localStorage.removeItem('authRefreshToken');
+    localStorage.removeItem('authAccessToken');
     return Promise.reject(err);
   }
 }
