@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
+import { ATLAS_URI } from './config';
 
 export default function connectToDatabase(
   cb: (err: Error) => void
 ): (err: Error) => void {
-  const uri: string | undefined = process.env.ATLAS_URI;
   mongoose.Promise = global.Promise;
-  mongoose.connect(uri!, {
+  mongoose.connect(ATLAS_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,

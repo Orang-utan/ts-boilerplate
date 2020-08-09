@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { ENDPOINT } from '../utils/config';
+import secureAxios from './apiClient';
 
 interface UserSignup {
   firstName: string;
@@ -15,8 +14,8 @@ interface UserLogin {
 
 const signup = ({ firstName, lastName, email, password }: UserSignup) => {
   return new Promise((resolve, reject) => {
-    axios({
-      url: `${ENDPOINT}/api/users/signup`,
+    secureAxios({
+      url: '/api/users/signup',
       method: 'POST',
       timeout: 0,
       headers: {
@@ -36,8 +35,8 @@ const signup = ({ firstName, lastName, email, password }: UserSignup) => {
 
 const login = ({ email, password }: UserLogin) => {
   return new Promise((resolve, reject) => {
-    axios({
-      url: `${ENDPOINT}/api/users/login`,
+    secureAxios({
+      url: '/api/users/login',
       method: 'POST',
       timeout: 0,
       headers: {
@@ -55,4 +54,22 @@ const login = ({ email, password }: UserLogin) => {
   });
 };
 
-export { signup, login };
+const fetchMe = (key: string, { accessToken }: { accessToken: string }) => {
+  return new Promise((resolve, reject) => {
+    secureAxios({
+      url: '/api/users/me',
+      method: 'GET',
+      timeout: 0,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err: Error) => reject(err));
+  });
+};
+
+export { signup, login, fetchMe };

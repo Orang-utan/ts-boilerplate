@@ -4,7 +4,7 @@ const errorHandler = (
   errorCode?: string
 ): Response => {
   if (errorCode === 'invalidToken' || errorCode === 'refreshExpired') {
-    return res.status(403).send({
+    return res.status(401).send({
       success: false,
       message: errorMessage,
       code: errorCode,
