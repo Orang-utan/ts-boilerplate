@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Formik, Field, Form, FieldAttributes } from 'formik';
-import { login } from '../api/UserApi';
+import { login } from '../api/userApi';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../components/AuthContext';
@@ -55,7 +55,7 @@ const FieldWrapper = ({
 
 const Login = () => {
   const [loginMutate] = useMutation(login);
-  const { authState, authActions } = useContext(AuthContext);
+  const { authActions } = useContext(AuthContext);
 
   let history = useHistory();
 
@@ -71,7 +71,7 @@ const Login = () => {
 
       history.push('/dashboard');
     } catch (error) {
-      alert('Error');
+      alert('Login Error');
     }
   };
 

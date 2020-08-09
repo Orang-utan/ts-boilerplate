@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Formik, Field, Form, FieldAttributes } from 'formik';
-import { signup } from '../api/UserApi';
+import { signup } from '../api/userApi';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 

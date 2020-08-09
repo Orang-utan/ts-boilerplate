@@ -1,6 +1,7 @@
 import express from 'express';
 import { hash, compare } from 'bcrypt';
 import { User, IUser } from '../models/user.model';
+import auth from '../middleware/auth';
 import errorHandler from './error';
 import {
   generateAccessToken,
@@ -82,6 +83,7 @@ router.post('/login', async (req, res) => {
 // refresh token
 router.post('/refreshToken', (req, res) => {
   const { refreshToken } = req.body;
+
   if (!refreshToken) {
     return errorHandler(res, 'No token provided.');
   }
@@ -100,6 +102,21 @@ router.post('/refreshToken', (req, res) => {
       }
       return errorHandler(res, err.message);
     });
+});
+
+// get me
+// protected route
+router.get('/me', auth, (req, res) => {
+  const { userId } = req;
+
+  return User.findById(userId)
+    .select('firstName lastName email _id')
+    .then((user) => {
+      if (!user) return errorHandler(res, 'User does not exist.');
+
+      return res.status(200).json({ success: true, data: user });
+    })
+    .catch((err) => errorHandler(res, err.message));
 });
 
 // TESTING ROUTES BELOW

@@ -14,3 +14,8 @@ switch (process.env.NODE_ENV) {
   default:
     throw new Error(`'NODE_ENV' ${process.env.NODE_ENV} is not handled!`);
 }
+
+const ATLAS_URI = process.env.ATLAS_URI || '';
+const JWT_SECRET = process.env.JWT_SECRET || '';
+
+export { ATLAS_URI, JWT_SECRET };
