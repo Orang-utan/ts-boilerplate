@@ -41,6 +41,8 @@ const Dashboard = () => {
   const MyProfile = (res: MyProfileResponse) => {
     const { data: myProfile } = res;
 
+    console.log(res);
+
     return (
       <div>
         <h3 className="title is-3">
