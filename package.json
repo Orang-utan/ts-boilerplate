@@ -9,8 +9,8 @@
     "dev": "concurrently \"yarn server\" \"yarn client\"",
     "server": "ts-node-dev --respawn src/index.ts",
     "client": "cd src/client && yarn start",
-    "start": "ts-node ./src/index.ts",
     "build": "tsc",
+    "start": "node ./build/index.js",
     "heroku-postbuild": "cd src/client && yarn install && yarn build"
   },
   "devDependencies": {
