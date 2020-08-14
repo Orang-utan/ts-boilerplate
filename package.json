@@ -11,7 +11,7 @@
     "client": "cd src/client && yarn start",
     "build": "tsc",
     "start": "NODE_ENV=production node index.js",
-    "heroku-postbuild": "cd src/client && yarn install && yarn build"
+    "heroku-postbuild": "yarn build && cd src/client && yarn install && yarn build"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
