@@ -20,6 +20,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+// API Routes
+app.use('/api/users', userRouter);
+
+// Serving static files
 if (process.env.NODE_ENV === 'production') {
   const root = path.join(__dirname, 'client', 'build');
 
@@ -28,9 +32,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile('index.html', { root });
   });
 }
-
-// API Routes
-app.use('/api/users', userRouter);
 
 const server = app.listen(app.get('port'), () => {
   console.log(`Listening on port ${app.get('port')} 🚀`);
