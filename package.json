@@ -1,16 +1,16 @@
 {
   "name": "ts-boilerplate",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "index.ts",
   "license": "MIT",
   "scripts": {
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "setup": "yarn install && cd src/client && yarn install",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "server": "ts-node-dev --respawn src/index.ts",
+    "server": "ts-node-dev --respawn index.ts",
     "client": "cd src/client && yarn start",
     "build": "tsc",
-    "start": "NODE_ENV=production node ./src/index.js",
+    "start": "NODE_ENV=production node ./index.js",
     "heroku-postbuild": "cd src/client && yarn install && yarn build"
   },
   "devDependencies": {
