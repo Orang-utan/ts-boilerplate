@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { Formik, Field, Form, FieldAttributes } from 'formik';
-import auth from '../api/auth';
+import { Field, FieldAttributes, Form, Formik } from 'formik';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import auth from '../api/auth';
 
 const FormContainer = styled.div`
   text-align: center;
@@ -51,9 +51,11 @@ const Login = () => {
     auth.login(values);
   };
 
-  const loginComplete = ({ loggedIn }: { loggedIn: boolean }) => {
-    if (loggedIn) {
+  const loginComplete = ({ error }: { error?: string }) => {
+    if (!error) {
       history.push('/dashboard');
+    } else {
+      console.error(error);
     }
   };
 

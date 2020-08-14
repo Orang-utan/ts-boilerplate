@@ -11,7 +11,13 @@ interface LoginResponse {
   success: boolean;
 }
 
-type AuthCallBack = ({ loggedIn }: { loggedIn: boolean }) => void;
+type AuthCallBack = ({
+  loggedIn,
+  error,
+}: {
+  loggedIn: boolean;
+  error?: string;
+}) => void;
 
 class Auth {
   accessToken: string = '';
@@ -61,7 +67,9 @@ class Auth {
         });
       })
       .catch((error: Error) => {
-        console.error(error);
+        this.loginSubscribers.forEach((subscriber) => {
+          subscriber({ loggedIn: false, error: error.message });
+        });
       });
   }
 
