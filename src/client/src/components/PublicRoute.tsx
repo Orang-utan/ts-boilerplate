@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { isLoggedIn } from '../utils/authUtil';
+import auth from '../api/auth';
 
 const PublicRoute: React.FC<{
   component: React.FC;
   path: string;
   exact: boolean;
 }> = (props) => {
-  const condition = isLoggedIn();
+  const condition = auth.isAuthenticated();
 
   return condition ? (
     <Redirect to="/dashboard" />

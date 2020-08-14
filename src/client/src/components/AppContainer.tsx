@@ -1,7 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { AuthContext } from '../components/AuthContext';
+import React from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import Navbar from './Navbar';
 
 const FooterContainer = styled.div`
@@ -19,17 +17,6 @@ const FooterContainer = styled.div`
 `;
 
 const AppContainer = ({ children }: { children: any }) => {
-  const { authState, authActions } = useContext(AuthContext);
-  let history = useHistory();
-
-  const logout = () => {
-    authActions.setLoggedIn(false);
-    authActions.setAccessToken('');
-    authActions.setRefreshToken('');
-
-    history.push('/');
-  };
-
   return (
     <div>
       <Navbar />

@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { AuthContext } from '../components/AuthContext';
+import auth from '../api/auth';
+
 import { fetchMe } from '../api/userApi';
 import { useQuery } from 'react-query';
+import { useHistory } from 'react-router-dom';
 
 const ContentContainer = styled.div`
   text-align: center;
@@ -23,7 +25,6 @@ interface MyProfileResponse extends APIResponse {
 }
 
 const Dashboard = () => {
-  const { authState } = useContext(AuthContext);
   const {
     isLoading,
     isError,
@@ -34,7 +35,8 @@ const Dashboard = () => {
     isError: boolean;
     data: any;
     error: any;
-  } = useQuery(['fetchMe', { accessToken: authState.accessToken! }], fetchMe);
+  } = useQuery(['fetchMe', { accessToken: auth.getAccessToken() }], fetchMe);
+  let history = useHistory();
 
   const MyProfile = (res: MyProfileResponse) => {
     const { data: myProfile } = res;
@@ -62,6 +64,12 @@ const Dashboard = () => {
     <ContentContainer>
       {isLoading && <div>Loading...</div>}
       {myProfile && MyProfile(myProfile)}
+      <button
+        className="button is-primary"
+        onClick={() => history.push('/user')}
+      >
+        Go to User
+      </button>
     </ContentContainer>
   );
 };
