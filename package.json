@@ -7,7 +7,7 @@
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "setup": "yarn install && cd src/client && yarn install",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "server": "ts-node-dev --respawn index.ts",
+    "server": "ts-node-dev --respawn src/index.ts",
     "client": "cd src/client && yarn start",
     "start": "ts-node ./src/index.ts",
     "build": "tsc",

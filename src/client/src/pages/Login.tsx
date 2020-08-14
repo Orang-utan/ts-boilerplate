@@ -55,6 +55,7 @@ const Login = () => {
     if (!error) {
       history.push('/dashboard');
     } else {
+      alert(error);
       console.error(error);
     }
   };
