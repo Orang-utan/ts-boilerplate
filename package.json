@@ -10,7 +10,7 @@
     "server": "ts-node-dev --respawn index.ts",
     "client": "cd src/client && yarn start",
     "build": "tsc",
-    "start": "NODE_ENV=production node index.js",
+    "start": "node index.js",
     "heroku-postbuild": "yarn build && cd src/client && yarn install && yarn build"
   },
   "devDependencies": {
