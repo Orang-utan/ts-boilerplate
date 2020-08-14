@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ENDPOINT } from '../utils/config';
-import { getRefreshToken } from '../utils/authUtil';
+import auth from './auth';
 
 let isAlreadyFetchingAccessToken = false;
 let subscribers: ((accessToken: string) => void)[] = [];
@@ -17,7 +17,7 @@ secureAxios.interceptors.response.use(
     const errorResponse = error.response;
 
     if (errorResponse && isTokenExpiredError(errorResponse)) {
-      return refreshTokenAndReattemptRequest(error);
+      return refreshTokenAndReattemptRequest(errorResponse);
     }
 
     return Promise.reject(error);
@@ -28,13 +28,13 @@ function isTokenExpiredError(error: AxiosResponse) {
   return error.status === 401;
 }
 
-async function refreshTokenAndReattemptRequest(error: AxiosError) {
-  console.log('Refreshing token');
+async function refreshTokenAndReattemptRequest(
+  errorResponse: AxiosResponse<any>
+) {
   try {
-    const { response: errorResponse } = error;
-    const refreshToken = getRefreshToken();
+    const refreshToken = auth.getRefreshToken();
     if (!refreshToken) {
-      return Promise.reject(error);
+      return Promise.reject(new Error('Invalid refresh token'));
     }
 
     const retryOriginalRequest = new Promise((resolve) => {
@@ -53,22 +53,21 @@ async function refreshTokenAndReattemptRequest(error: AxiosError) {
         headers: {
           'Content-Type': 'application/json',
         },
-        data: JSON.stringify({ refreshToken: refreshToken }),
+        data: JSON.stringify({ refreshToken }),
       });
 
       if (!response.data) {
-        return Promise.reject(error);
+        return Promise.reject(new Error('Failed to fetch refresh token'));
       }
       const newAccessToken = response.data.accessToken;
-      localStorage.setItem('authAccessToken', newAccessToken);
+      auth.setAccessToken(newAccessToken);
 
       isAlreadyFetchingAccessToken = false;
-      onAccessTokenFetched(newAccessToken);
+      onAccessTokenFetched(auth.getAccessToken());
     }
     return retryOriginalRequest;
   } catch (err) {
-    localStorage.removeItem('authRefreshToken');
-    localStorage.removeItem('authAccessToken');
+    auth.logout();
     return Promise.reject(err);
   }
 }

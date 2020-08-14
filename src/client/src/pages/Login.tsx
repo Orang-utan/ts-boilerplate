@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Formik, Field, Form, FieldAttributes } from 'formik';
-import { login } from '../api/userApi';
-import { useMutation } from 'react-query';
+import auth from '../api/auth';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../components/AuthContext';
 
 const FormContainer = styled.div`
   text-align: center;
@@ -19,12 +17,6 @@ const Button = styled.button`
 interface LoginParams {
   email: string;
   password: string;
-}
-
-interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
-  success: boolean;
 }
 
 const initialValues = {
@@ -54,26 +46,18 @@ const FieldWrapper = ({
 };
 
 const Login = () => {
-  const [loginMutate] = useMutation(login);
-  const { authActions } = useContext(AuthContext);
-
   let history = useHistory();
+  const handleSubmit = (values: LoginParams) => {
+    auth.login(values);
+  };
 
-  const handleSubmit = async (values: LoginParams) => {
-    try {
-      const { accessToken, refreshToken } = (await loginMutate(
-        values
-      )) as LoginResponse;
-
-      authActions.setAccessToken(accessToken);
-      authActions.setRefreshToken(refreshToken);
-      authActions.setLoggedIn(true);
-
+  const loginComplete = ({ loggedIn }: { loggedIn: boolean }) => {
+    if (loggedIn) {
       history.push('/dashboard');
-    } catch (error) {
-      alert('Login Error');
     }
   };
+
+  auth.addLoginSubscribers(loginComplete);
 
   return (
     <FormContainer>

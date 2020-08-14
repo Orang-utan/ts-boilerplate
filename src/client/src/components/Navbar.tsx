@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react';
-import { AuthContext } from '../components/AuthContext';
+import React, { useState, useEffect } from 'react';
+
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import auth from '../api/auth';
 
 const NavbarContainer = styled.div`
   width: 100vw;
@@ -20,16 +21,20 @@ const NavbarItem = styled.div`
 `;
 
 const Navbar = () => {
-  const { authState, authActions } = useContext(AuthContext);
   let history = useHistory();
+  const [loggedIn, setLoggedIn] = useState(auth.isAuthenticated());
 
-  const logout = () => {
-    authActions.setAccessToken('');
-    authActions.setRefreshToken('');
-    authActions.setLoggedIn(false);
-
+  const logout = ({ loggedIn }: { loggedIn: boolean }) => {
     history.push('/');
+    setLoggedIn(loggedIn);
   };
+
+  const login = ({ loggedIn }: { loggedIn: boolean }) => {
+    setLoggedIn(loggedIn);
+  };
+
+  auth.addLoginSubscribers(login);
+  auth.addLogoutSubscribers(logout);
 
   return (
     <NavbarContainer>
@@ -39,8 +44,11 @@ const Navbar = () => {
         </a>
       </NavbarItem>
       <NavbarItem>
-        {authState.loggedIn && (
-          <h1 className="title is-6 has-text-white" onClick={logout}>
+        {loggedIn && (
+          <h1
+            className="title is-6 has-text-white"
+            onClick={() => auth.logout()}
+          >
             Logout
           </h1>
         )}
