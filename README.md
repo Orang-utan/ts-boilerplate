@@ -6,10 +6,12 @@ It is built using the TypeScript, React, Express, Mongoose, MongoDB stack. If yo
 
 ## Features
 Essentially, here're some of its features:
-- User authentication / authorization system
+- JWT-based user authentication / authorization system
+- Silent refresh / access token retrieval
 - Clean mono-repo structure with Express Server and React Client
 - Code linting setup according to Airbnb standards
 - Able to connect to MongoDB and WebSockets
+- Pretty UI using Bulma and Styled Components
 - Easy deployability on Heroku (literally 3 steps, it's really easy)
 
 ## Setting Up
