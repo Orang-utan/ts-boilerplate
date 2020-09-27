@@ -1,4 +1,5 @@
-import { login } from './userApi';
+import { login } from '../userApi';
+import { AxiosError } from 'axios';
 
 interface LoginParams {
   email: string;
@@ -13,10 +14,10 @@ interface LoginResponse {
 
 type AuthCallBack = ({
   loggedIn,
-  error,
+  errorMessage,
 }: {
   loggedIn: boolean;
-  error?: string;
+  errorMessage?: string;
 }) => void;
 
 class Auth {
@@ -66,9 +67,9 @@ class Auth {
           subscriber({ loggedIn: true });
         });
       })
-      .catch((error: Error) => {
+      .catch((error: AxiosError) => {
         this.loginSubscribers.forEach((subscriber) => {
-          subscriber({ loggedIn: false, error: error.message });
+          subscriber({ loggedIn: false, errorMessage: error.response?.data });
         });
       });
   }

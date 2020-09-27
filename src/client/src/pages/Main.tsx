@@ -17,7 +17,7 @@ const Button = styled.button`
 `;
 
 const Main = () => {
-  let history = useHistory();
+  const history = useHistory();
 
   return (
     <ContentContainer>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import auth from '../api/auth';
+import auth from '../api/core/auth';
 
 const NavbarContainer = styled.div`
   width: 100vw;

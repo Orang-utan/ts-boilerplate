@@ -1,21 +1,20 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import auth from '../api/auth';
-
-import { fetchMe } from '../api/userApi';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import auth from '../api/core/auth';
+import { fetchMe } from '../api/userApi';
+import Sidebar from '../components/Sidebar';
+
+const FlexContainer = styled.div`
+  display: flex;
+`;
 
 const ContentContainer = styled.div`
-  text-align: center;
   margin: 5%;
 `;
 
-interface APIResponse {
-  success: boolean;
-}
-
-interface MyProfileResponse extends APIResponse {
+interface MyProfileResponse extends IAPIResponse {
   data: {
     _id: string;
     email: string;
@@ -25,24 +24,14 @@ interface MyProfileResponse extends APIResponse {
 }
 
 const Dashboard = () => {
-  const {
-    isLoading,
-    isError,
-    data: myProfile,
-    error,
-  }: {
-    isLoading: boolean;
-    isError: boolean;
-    data: any;
-    error: any;
-  } = useQuery(['fetchMe', { accessToken: auth.getAccessToken() }], fetchMe);
-  let history = useHistory();
+  const profileQuery = useQuery(
+    ['fetchMe', { accessToken: auth.getAccessToken() }],
+    fetchMe
+  );
+  const history = useHistory();
 
   const MyProfile = (res: MyProfileResponse) => {
     const { data: myProfile } = res;
-
-    console.log(res);
-
     return (
       <div>
         <h3 className="title is-3">
@@ -63,16 +52,23 @@ const Dashboard = () => {
   };
 
   return (
-    <ContentContainer>
-      {isLoading && <div>Loading...</div>}
-      {myProfile && MyProfile(myProfile)}
-      <button
-        className="button is-primary"
-        onClick={() => history.push('/user')}
-      >
-        Go to User
-      </button>
-    </ContentContainer>
+    <FlexContainer>
+      <Sidebar />
+      <ContentContainer>
+        {profileQuery.isLoading && <div>Loading...</div>}
+        {profileQuery.data && MyProfile(profileQuery.data as any)}
+        <button
+          className="button is-primary"
+          style={{ margin: '10px 0px' }}
+          onClick={() => {
+            profileQuery.clear();
+            profileQuery.refetch();
+          }}
+        >
+          Clear Cache and Reload
+        </button>
+      </ContentContainer>
+    </FlexContainer>
   );
 };
 

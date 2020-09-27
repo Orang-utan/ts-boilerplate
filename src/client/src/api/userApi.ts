@@ -1,18 +1,6 @@
-import secureAxios from './apiClient';
+import secureAxios from './core/apiClient';
 
-interface UserSignup {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
-interface UserLogin {
-  email: string;
-  password: string;
-}
-
-const signup = ({ firstName, lastName, email, password }: UserSignup) => {
+const signup = ({ firstName, lastName, email, password }: IUserSignup) => {
   return new Promise((resolve, reject) => {
     secureAxios({
       url: '/api/users/signup',
@@ -33,7 +21,7 @@ const signup = ({ firstName, lastName, email, password }: UserSignup) => {
   });
 };
 
-const login = ({ email, password }: UserLogin) => {
+const login = ({ email, password }: IUserLogin) => {
   return new Promise((resolve, reject) => {
     secureAxios({
       url: '/api/users/login',

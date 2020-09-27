@@ -2,7 +2,7 @@ import { Field, FieldAttributes, Form, Formik } from 'formik';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import auth from '../api/auth';
+import auth from '../api/core/auth';
 
 const FormContainer = styled.div`
   text-align: center;
@@ -13,11 +13,6 @@ const FormContainer = styled.div`
 const Button = styled.button`
   width: 100%;
 `;
-
-interface LoginParams {
-  email: string;
-  password: string;
-}
 
 const initialValues = {
   email: '',
@@ -46,17 +41,17 @@ const FieldWrapper = ({
 };
 
 const Login = () => {
-  let history = useHistory();
-  const handleSubmit = (values: LoginParams) => {
+  const history = useHistory();
+
+  const handleSubmit = (values: IUserLogin) => {
     auth.login(values);
   };
 
-  const loginComplete = ({ error }: { error?: string }) => {
-    if (!error) {
+  const loginComplete = ({ errorMessage }: { errorMessage?: string }) => {
+    if (!errorMessage) {
       history.push('/dashboard');
     } else {
-      alert(error);
-      console.error(error);
+      alert(`Error: ${JSON.stringify(errorMessage)}`);
     }
   };
 

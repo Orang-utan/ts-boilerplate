@@ -15,13 +15,6 @@ const Button = styled.button`
   width: 100%;
 `;
 
-interface SignupParams {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
 const initialValues = {
   firstName: '',
   lastName: '',
@@ -52,16 +45,15 @@ const FieldWrapper = ({
 
 const Signup = () => {
   const [signupMutate] = useMutation(signup);
-  let history = useHistory();
+  const history = useHistory();
 
-  const handleSubmit = async (values: SignupParams) => {
+  const handleSubmit = async (values: IUserSignup) => {
     try {
       await signupMutate(values);
       alert('Success');
       history.push('/login');
     } catch (error) {
-      alert('Error');
-      console.log(error.response.data);
+      alert(`Error: ${error.response.data}`);
     }
   };
 

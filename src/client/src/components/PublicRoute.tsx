@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import auth from '../api/auth';
+import auth from '../api/core/auth';
 
 const PublicRoute: React.FC<{
   component: React.FC;
