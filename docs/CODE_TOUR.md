@@ -37,3 +37,21 @@ types/ -- Custom type definition files for TypeScript compilation
 utils/ -- Utility functions (i.e. Database connnection, email client, etc)
 
 index.ts -- Main entry file for our server
+
+## Client Directory (src/client/)
+
+public/ -- Target folder when building React into static HTML
+
+src/ -- Our actual src directory
+
+src/api -- All of our API clients and logic
+
+src/components -- Where we define all of our reusable React components
+
+src/pages -- Where we define a new page, and React router
+
+src/types -- Custom type definition files for TypeScript compilation
+
+src/utils -- Utility files such as configurations
+
+src/index.tsx -- Our client entry point
