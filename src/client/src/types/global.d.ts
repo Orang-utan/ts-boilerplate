@@ -14,6 +14,6 @@ declare interface IUserLogin {
   password: string;
 }
 
-interface IAPIResponse {
+declare interface IAPIResponse {
   success: boolean;
 }
