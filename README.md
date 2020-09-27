@@ -1,11 +1,15 @@
 # TS-Boilerplate
 
+![demo](docs/images/demo.png 'Demo')
+
 Dead simple monorepo boilerplate web project designed to take you from Git Cloning to Heroku Deployment in less 5 minutes. 🚀🤩
 
 It is built using the TypeScript, React, Express, Mongoose, MongoDB stack. If you want to checkout an example project based on TS-Boilerplate, check out [TS-Canvas](https://github.com/orang-utan/ts-canvas).
 
 ## Features
+
 Essentially, here're some of its features:
+
 - JWT-based user authentication / authorization system
 - Silent refresh / access token retrieval
 - Clean mono-repo structure with Express Server and React Client
