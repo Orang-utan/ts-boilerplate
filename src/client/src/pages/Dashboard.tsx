@@ -1,6 +1,5 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import auth from '../api/core/auth';
 import { fetchMe } from '../api/userApi';
@@ -26,9 +25,11 @@ interface MyProfileResponse extends IAPIResponse {
 const Dashboard = () => {
   const profileQuery = useQuery(
     ['fetchMe', { accessToken: auth.getAccessToken() }],
-    fetchMe
+    fetchMe,
+    {
+      refetchOnWindowFocus: false,
+    }
   );
-  const history = useHistory();
 
   const MyProfile = (res: MyProfileResponse) => {
     const { data: myProfile } = res;
