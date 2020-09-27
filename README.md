@@ -20,6 +20,14 @@ Essentially, here're some of its features:
 
 ## Setting Up
 
+#### Recommended Tools Checklist
+
+- Git Clone this repository
+- Create a [MongoDB Atlas Account](https://www.mongodb.com/cloud/atlas)
+- Create a [Heroku account](https://www.heroku.com/)
+- Install [Node.JS](https://nodejs.org/en/download/)
+- Install [Yarn Package Manager](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
+
 #### Installing Requirements
 
 ```bash
