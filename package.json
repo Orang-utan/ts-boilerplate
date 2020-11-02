@@ -11,6 +11,8 @@
     "client": "cd src/client && yarn start",
     "start": "ts-node ./src/index.ts",
     "build": "tsc",
+    "test": "echo 'This is where tests would be run... if we had any.'",
+    "ci-lint": "eslint",
     "heroku-postbuild": "cd src/client && yarn install && yarn build"
   },
   "devDependencies": {
