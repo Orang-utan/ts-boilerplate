@@ -5,11 +5,15 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import auth from './api/auth';
 import Navbar from './components/Navbar';
 import PublicRoute from './components/routing/PublicRoute';
+import PrivateRoute from './components/routing/PrivateRoute';
 import { AuthContext } from './context';
+
+// import pages
 import LoginPage from './pages/authflow/LoginPage';
 import RegisterPage from './pages/authflow/RegisterPage';
 import IndexPage from './pages/IndexPage';
 import NotFoundPage from './pages/NotFoundPage';
+import DashboardPage from './pages/DashboardPage';
 
 const queryCache = new QueryCache();
 
@@ -47,6 +51,7 @@ function App() {
               <PublicRoute exact path="/" component={IndexPage} />
               <PublicRoute exact path="/login" component={LoginPage} />
               <PublicRoute exact path="/register" component={RegisterPage} />
+              <PrivateRoute exact path="/dashboard" component={DashboardPage} />
               <Route exact={false} component={NotFoundPage} />
             </Switch>
           </main>

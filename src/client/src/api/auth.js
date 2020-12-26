@@ -27,13 +27,8 @@ class Auth {
 
   /** Logout from account. */
   async logout() {
-    try {
-      await api.post('/api/users/logout');
-      this.accessToken = null;
-      localStorage.removeItem('authRefreshToken');
-    } catch (err) {
-      console.log(err);
-    }
+    this.accessToken = null;
+    localStorage.removeItem('authRefreshToken');
   }
 
   /** Refresh access token using saved refresh token. */

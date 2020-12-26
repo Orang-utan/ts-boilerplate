@@ -6,7 +6,7 @@ const PublicRoute = (props) => {
   const auth = useContext(AuthContext);
 
   return auth.isAuthenticated ? (
-    <Redirect to="/" />
+    <Redirect to="/dashboard" />
   ) : (
     <Route path={props.path} exact={props.exact} component={props.component} />
   );
