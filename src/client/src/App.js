@@ -3,7 +3,7 @@ import { QueryCache, ReactQueryCacheProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query-devtools';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import auth from './api/auth';
-import Navbar from './components/Navbar';
+import AppContainer from './components/AppContainer';
 import PublicRoute from './components/routing/PublicRoute';
 import PrivateRoute from './components/routing/PrivateRoute';
 import { AuthContext } from './context';
@@ -43,19 +43,24 @@ function App() {
   return (
     <AuthContext.Provider value={authContextValue}>
       <Router>
-        <ReactQueryCacheProvider queryCache={queryCache}>
-          <ReactQueryDevtools />
-          <Navbar />
-          <main>
-            <Switch>
-              <PublicRoute exact path="/" component={IndexPage} />
-              <PublicRoute exact path="/login" component={LoginPage} />
-              <PublicRoute exact path="/register" component={RegisterPage} />
-              <PrivateRoute exact path="/dashboard" component={DashboardPage} />
-              <Route exact={false} component={NotFoundPage} />
-            </Switch>
-          </main>
-        </ReactQueryCacheProvider>
+        <AppContainer>
+          <ReactQueryCacheProvider queryCache={queryCache}>
+            <ReactQueryDevtools />
+            <main>
+              <Switch>
+                <PublicRoute exact path="/" component={IndexPage} />
+                <PublicRoute exact path="/login" component={LoginPage} />
+                <PublicRoute exact path="/register" component={RegisterPage} />
+                <PrivateRoute
+                  exact
+                  path="/dashboard"
+                  component={DashboardPage}
+                />
+                <Route exact={false} component={NotFoundPage} />
+              </Switch>
+            </main>
+          </ReactQueryCacheProvider>
+        </AppContainer>
       </Router>
     </AuthContext.Provider>
   );
