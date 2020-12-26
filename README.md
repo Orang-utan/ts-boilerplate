@@ -68,7 +68,7 @@ Deploying this project on Heroku is dead simple. Basically, go on Heroku and cre
 
 
 ## Todo
-- [ ] Account Confirmation from SendGrid
+- [ ] Account Confirmation / Password Reset (SendGrid)
 - [ ] Migrate Project from MongoDB to PostgreSQL
 - [ ] Refactor Backend to CLEAN architecture
 - [ ] File upload functionality
