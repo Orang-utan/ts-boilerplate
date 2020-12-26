@@ -67,7 +67,7 @@ $ yarn client
 Deploying this project on Heroku is dead simple. Basically, go on Heroku and create a new Heroku app, connect your project Github to your new Heroku app, and hit Deploy. Note, that you will need to configure the enviromental variable under settings.
 
 
-## Features
+## Todo
 - [ ] Migrate Project from MongoDB to PostgreSQL
 - [ ] Refactor Backend to CLEAN architecture
 - [ ] File upload functionality
