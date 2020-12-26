@@ -1,8 +1,10 @@
+import express from 'express';
+
 const errorHandler = (
-  res: any,
+  res: express.Response,
   errorMessage: string,
   errorCode?: string
-): Response => {
+): express.Response => {
   if (errorCode === 'invalidToken' || errorCode === 'refreshExpired') {
     return res.status(401).send({
       success: false,

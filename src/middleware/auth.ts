@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { verify } from 'jsonwebtoken';
 import { IUser } from '../models/user.model';
 import errorHandler from '../routes/error';
@@ -8,7 +8,7 @@ const auth = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {
+): unknown => {
   let token = req.headers.authorization;
   if (!token)
     return errorHandler(res, 'Your access token is invalid.', 'invalidToken');

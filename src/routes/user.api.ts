@@ -10,7 +10,6 @@ import {
 } from './user.util';
 
 const router = express.Router();
-
 const saltRounds = 10;
 
 // create new user
@@ -50,10 +49,10 @@ router.post('/login', async (req, res) => {
   const { password } = req.body;
 
   User.findOne({ email }).then((user):
-  | Response
-  | Promise<boolean>
-  | boolean
-  | PromiseLike<boolean> => {
+    | express.Response
+    | Promise<boolean>
+    | boolean
+    | PromiseLike<boolean> => {
     // user does not exist
     if (!user) return errorHandler(res, 'User email or password is incorrect.');
 

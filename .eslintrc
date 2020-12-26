@@ -1,15 +1,17 @@
 {
-  "root": true,
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "extends": ["airbnb-typescript", "prettier"],
+  "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["build/**"],
   "rules": {
     "no-console": "off",
     "max-len": "off",
     "no-unused-vars": "warn",
     "indent": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "no-non-null-assertion": "off"
   }
 }
