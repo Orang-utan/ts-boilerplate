@@ -18,8 +18,8 @@ class Auth {
   }
 
   /** Retrieve JWT from server. */
-  async login(username, password) {
-    const resp = await axios.post('/api/users/login', { username, password });
+  async login(email, password) {
+    const resp = await axios.post('/api/users/login', { email, password });
     const { accessToken, refreshToken } = resp.data;
     this.accessToken = accessToken;
     localStorage.setItem('authRefreshToken', refreshToken);

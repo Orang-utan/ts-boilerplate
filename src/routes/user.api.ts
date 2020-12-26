@@ -12,11 +12,12 @@ import {
 const router = express.Router();
 const saltRounds = 10;
 
-// create new user
+/* account signup endpoint */
 router.post('/signup', async (req, res) => {
   const { firstName } = req.body;
   const { lastName } = req.body;
   const { email } = req.body;
+  const { company } = req.body;
   const { password } = req.body;
 
   if (await User.findOne({ email })) {
@@ -33,6 +34,7 @@ router.post('/signup', async (req, res) => {
       firstName,
       lastName,
       email,
+      institutionName: company,
       password: hashedPassword,
     });
 
@@ -43,43 +45,38 @@ router.post('/signup', async (req, res) => {
   });
 });
 
-// login user
+/* acccount login endpoint */
 router.post('/login', async (req, res) => {
   const { email } = req.body;
   const { password } = req.body;
 
-  User.findOne({ email }).then((user):
-    | express.Response
-    | Promise<boolean>
-    | boolean
-    | PromiseLike<boolean> => {
-    // user does not exist
-    if (!user) return errorHandler(res, 'User email or password is incorrect.');
+  const user = await User.findOne({ email });
+  // user does not exist
+  if (!user) return errorHandler(res, 'User does not exist.');
 
-    return compare(password, user.password, (err, result) => {
-      if (err) return errorHandler(res, err.message);
+  return compare(password, user.password, (err, result) => {
+    if (err) return errorHandler(res, err.message);
 
-      if (result) {
-        // password matched
-        const accessToken = generateAccessToken(user);
-        const refreshToken = generateRefreshToken(user);
+    if (result) {
+      // password matched
+      const accessToken = generateAccessToken(user);
+      const refreshToken = generateRefreshToken(user);
 
-        return Promise.all([accessToken, refreshToken]).then((tokens) =>
-          res.status(200).json({
-            success: true,
-            accessToken: tokens[0],
-            refreshToken: tokens[1],
-          })
-        );
-      }
+      return Promise.all([accessToken, refreshToken]).then((tokens) =>
+        res.status(200).json({
+          success: true,
+          accessToken: tokens[0],
+          refreshToken: tokens[1],
+        })
+      );
+    }
 
-      // wrong password
-      return errorHandler(res, 'User email or password is incorrect.');
-    });
+    // wrong password
+    return errorHandler(res, 'User email or password is incorrect.');
   });
 });
 
-// refresh token
+/* account jwt token refresh */
 router.post('/refreshToken', (req, res) => {
   const { refreshToken } = req.body;
 
@@ -103,8 +100,7 @@ router.post('/refreshToken', (req, res) => {
     });
 });
 
-// get me
-// protected route
+/* protected: get my info */
 router.get('/me', auth, (req, res) => {
   const { userId } = req;
 
@@ -118,15 +114,15 @@ router.get('/me', auth, (req, res) => {
     .catch((err) => errorHandler(res, err.message));
 });
 
-// TESTING ROUTES BELOW
-// get all users
-router.post('/', (_, res) => {
+/* TESTING ENDPOINTS BELOW (DELETE IN PRODUCTION) */
+/* fetch all users in database */
+router.get('/', (_, res) => {
   User.find({})
     .then((result) => res.status(200).json({ success: true, result }))
     .catch((e) => errorHandler(res, e));
 });
 
-// delete all users
+/* delete all users in database */
 router.delete('/', (_, res) => {
   User.deleteMany({})
     .then(() => res.status(200).json({ success: true }))
