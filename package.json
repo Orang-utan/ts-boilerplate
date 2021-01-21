@@ -91,7 +91,7 @@
     "react-router-hash-link": "^2.3.1",
     "react-table": "^7.6.1",
     "shortid": "^2.2.16",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "swiper": "^6.3.5",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
