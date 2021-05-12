@@ -92,7 +92,7 @@
     "react-table": "^7.6.1",
     "shortid": "^2.2.16",
     "socket.io": "^2.3.0",
-    "swiper": "^6.3.5",
+    "swiper": "^6.5.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
     "victory": "^35.3.5"
