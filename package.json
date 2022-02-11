@@ -83,7 +83,7 @@
     "mongodb-memory-server": "^6.9.2",
     "mongoose": "^5.9.21",
     "multer": "^1.4.2",
-    "node-sass": "4.14.1",
+    "node-sass": "7.0.0",
     "react-bulma-components": "^3.4.0",
     "react-dom": "^17.0.1",
     "react-query": "^2.26.3",
